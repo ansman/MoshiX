@@ -17,6 +17,7 @@ package dev.zacsweers.moshi.sealed
 
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
+import dev.zacsweers.moshix.sealed.annotations.DefaultObject
 import dev.zacsweers.moshix.sealed.annotations.TypeLabel
 
 /**
@@ -36,6 +37,18 @@ sealed class Type(val type: String) {
   @TypeLabel("int") object IntType : Type("int")
 
   override fun toString() = type
+}
+
+@JsonClass(generateAdapter = true, generator = "sealed:type")
+sealed class TypeWithDefault {
+  @TypeLabel("data_class")
+  @JsonClass(generateAdapter = true)
+  data class DataClass(
+    val property: Int
+  ) : TypeWithDefault()
+
+  @DefaultObject
+  object DefaultType : TypeWithDefault()
 }
 
 @JsonClass(generateAdapter = true)

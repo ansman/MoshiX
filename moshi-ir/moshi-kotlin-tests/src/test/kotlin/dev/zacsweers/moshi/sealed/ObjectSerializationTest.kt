@@ -50,4 +50,10 @@ class ObjectSerializationTest {
         )
       )
   }
+
+  @Test
+  fun testDefaultObject() {
+    moshi.adapter<TypeWithDefault>()
+      .toJson(TypeWithDefault.DefaultType)
+  }
 }
